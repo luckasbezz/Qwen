@@ -123,7 +123,7 @@ function loadArticles() {
                 <h3 class="article-title">${article.title}</h3>
                 <p class="article-excerpt">${article.excerpt}</p>
                 <div class="article-footer">
-                    <a href="pages/article.html?id=${article.id}" class="read-more">
+                    <a href="#" class="read-more" onclick="openArticle(${article.id})">
                         Ler mais
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -281,22 +281,3 @@ window.addEventListener('scroll', () => {
 });
 
 console.log('🚀 Blog carregado com sucesso!');
-
-// ===================================
-// Search Functionality
-// ===================================
-function performQuickSearch(query) {
-    if (!query.trim()) return [];
-    
-    const searchTerm = query.toLowerCase().trim();
-    return articles.filter(article => 
-        article.title.toLowerCase().includes(searchTerm) ||
-        article.excerpt.toLowerCase().includes(searchTerm) ||
-        article.category.toLowerCase().includes(searchTerm)
-    );
-}
-
-// Export for use in other pages
-if (typeof window !== 'undefined') {
-    window.performQuickSearch = performQuickSearch;
-}
