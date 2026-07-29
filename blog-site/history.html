@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Histórico de artigos lidos">
+    <title>Histórico de Leitura | Blog Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <style>
+        .history-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 300px);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 3rem 0;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .dark-mode .page-title {
+            color: #f1f5f9;
+        }
+
+        .page-subtitle {
+            color: #64748b;
+            font-size: 1.125rem;
+        }
+
+        .dark-mode .page-subtitle {
+            color: #94a3b8;
+        }
+
+        .history-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .dark-mode .history-item {
+            background: #1e293b;
+        }
+
+        .history-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .history-info {
+            flex: 1;
+        }
+
+        .history-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .dark-mode .history-title {
+            color: #f1f5f9;
+        }
+
+        .history-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .dark-mode .history-meta {
+            color: #94a3b8;
+        }
+
+        .history-time {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
+        }
+
+        .dark-mode .empty-state {
+            color: #94a3b8;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .dark-mode .empty-title {
+            color: #f1f5f9;
+        }
+
+        .clear-history-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .clear-history-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(239, 68, 68, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .history-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .history-meta {
+                justify-content: center;
+            }
+
+            .history-item:hover {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">BlogPortfolio</span>
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html#home" class="nav-link">Início</a></li>
+                <li class="nav-item"><a href="index.html#articles" class="nav-link">Artigos</a></li>
+                <li class="nav-item"><a href="index.html#about" class="nav-link">Sobre</a></li>
+                <li class="nav-item"><a href="index.html#contact" class="nav-link">Contato</a></li>
+                <li class="nav-item"><a href="bookmarks.html" class="nav-link">🔖 Salvos</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link nav-cta">Dashboard</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+                <a href="login.html" class="btn btn-primary" id="authBtn">Login</a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="history-container">
+        <div class="page-header">
+            <h1 class="page-title">📚 Histórico de Leitura</h1>
+            <p class="page-subtitle">Acompanhe todos os artigos que você já leu</p>
+        </div>
+
+        <div class="history-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalRead">0</div>
+                <div class="stat-label">Artigos Lidos</div>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #10b981, #14b8a6);">
+                <div class="stat-number" id="thisWeek">0</div>
+                <div class="stat-label">Esta Semana</div>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                <div class="stat-number" id="totalTime">0</div>
+                <div class="stat-label">Minutos Totais</div>
+            </div>
+        </div>
+
+        <div class="history-list" id="historyList">
+            <!-- Histórico será carregado aqui -->
+        </div>
+
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-icon">📖</div>
+            <h2 class="empty-title">Nenhum artigo lido ainda</h2>
+            <p>Comece explorando nossos artigos e seu histórico aparecerá aqui!</p>
+            <a href="index.html#articles" class="btn btn-primary" style="margin-top: 1.5rem; display: inline-block;">Explorar Artigos</a>
+        </div>
+
+        <button class="clear-history-btn" onclick="clearHistory()" id="clearBtn" style="display: none;">
+            🗑️ Limpar Histórico
+        </button>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>📝 BlogPortfolio</h3>
+                    <p>Compartilhando conhecimento e experiências em tecnologia e desenvolvimento.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html#home">Início</a></li>
+                        <li><a href="index.html#articles">Artigos</a></li>
+                        <li><a href="search.html">Busca</a></li>
+                        <li><a href="bookmarks.html">Salvos</a></li>
+                        <li><a href="history.html">Histórico</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="mailto:contato@blogportfolio.com">contato@blogportfolio.com</a></li>
+                        <li><a href="https://github.com/seuusuario" target="_blank">GitHub</a></li>
+                        <li><a href="https://linkedin.com/in/seuusuario" target="_blank">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BlogPortfolio. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===================================
+        // Theme Toggle
+        // ===================================
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const theme = body.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+
+        // ===================================
+        // Mobile Menu
+        // ===================================
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const spans = hamburger.querySelectorAll('span');
+            if (navMenu.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // ===================================
+        // Load History
+        // ===================================
+        function loadHistory() {
+            const history = getReadingHistory();
+            const historyList = document.getElementById('historyList');
+            const emptyState = document.getElementById('emptyState');
+            const clearBtn = document.getElementById('clearBtn');
+
+            if (history.length === 0) {
+                historyList.style.display = 'none';
+                emptyState.style.display = 'block';
+                clearBtn.style.display = 'none';
+                return;
+            }
+
+            clearBtn.style.display = 'block';
+            
+            // Atualizar estatísticas
+            updateStats(history);
+
+            // Renderizar lista
+            historyList.innerHTML = history.map(item => {
+                const date = new Date(item.timestamp);
+                const now = new Date();
+                const isToday = date.toDateString() === now.toDateString();
+                const isYesterday = date.toDateString() === new Date(now.setDate(now.getDate() - 1)).toDateString();
+                
+                let timeLabel;
+                if (isToday) {
+                    timeLabel = `Hoje às ${date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
+                } else if (isYesterday) {
+                    timeLabel = `Ontem às ${date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
+                } else {
+                    timeLabel = date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+                }
+
+                const article = articles.find(a => a.id === parseInt(item.id)) || {};
+                
+                return `
+                    <a href="pages/article.html?id=${item.id}" class="history-item">
+                        <div class="history-icon" style="background: ${article.color || 'linear-gradient(135deg, #6366f1, #8b5cf6)'}">
+                            ${article.emoji || '📄'}
+                        </div>
+                        <div class="history-info">
+                            <h3 class="history-title">${item.title}</h3>
+                            <div class="history-meta">
+                                <span class="history-time">📅 ${timeLabel}</span>
+                                <span class="history-time">⏱️ ${article.readTime || '?'}</span>
+                                <span class="history-time">📁 ${article.category || 'Geral'}</span>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function getReadingHistory() {
+            try {
+                return JSON.parse(localStorage.getItem('readingHistory')) || [];
+            } catch {
+                return [];
+            }
+        }
+
+        function updateStats(history) {
+            const totalRead = history.length;
+            document.getElementById('totalRead').textContent = totalRead;
+
+            // Esta semana
+            const now = new Date();
+            const oneWeekAgo = new Date(now.setDate(now.getDate() - 7));
+            const thisWeekCount = history.filter(item => new Date(item.timestamp) >= oneWeekAgo).length;
+            document.getElementById('thisWeek').textContent = thisWeekCount;
+
+            // Tempo total estimado (média de 8 min por artigo)
+            const totalTime = totalRead * 8;
+            document.getElementById('totalTime').textContent = totalTime;
+        }
+
+        function clearHistory() {
+            if (confirm('Tem certeza que deseja limpar todo o histórico de leitura?')) {
+                localStorage.removeItem('readingHistory');
+                loadHistory();
+            }
+        }
+
+        // Articles data (imported from main.js logic)
+        const articles = [
+            { id: 1, title: "Introdução ao React Hooks", category: "React", readTime: "8 min", emoji: "⚛️", color: "linear-gradient(135deg, #61dafb, #6366f1)" },
+            { id: 2, title: "TypeScript: Por que você deveria usar?", category: "TypeScript", readTime: "6 min", emoji: "📘", color: "linear-gradient(135deg, #3178c6, #0ea5e9)" },
+            { id: 3, title: "APIs REST vs GraphQL", category: "Backend", readTime: "10 min", emoji: "🔌", color: "linear-gradient(135deg, #f59e0b, #ef4444)" },
+            { id: 4, title: "Clean Code: Princípios Essenciais", category: "Boas Práticas", readTime: "12 min", emoji: "✨", color: "linear-gradient(135deg, #10b981, #14b8a6)" },
+            { id: 5, title: "Docker para Iniciantes", category: "DevOps", readTime: "15 min", emoji: "🐳", color: "linear-gradient(135deg, #2496ed, #0ea5e9)" },
+            { id: 6, title: "Otimização de Performance Web", category: "Performance", readTime: "9 min", emoji: "🚀", color: "linear-gradient(135deg, #f97316, #ef4444)" }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadHistory);
+    </script>
+</body>
+</html>

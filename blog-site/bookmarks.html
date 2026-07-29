@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmarks | Blog Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .bookmarks-page {
+            min-height: 100vh;
+            padding: 6rem 2rem 4rem;
+        }
+
+        .bookmarks-header {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        .bookmarks-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .dark-mode .bookmarks-title {
+            color: #f1f5f9;
+        }
+
+        .bookmarks-subtitle {
+            color: #64748b;
+            font-size: 1.125rem;
+        }
+
+        .dark-mode .bookmarks-subtitle {
+            color: #94a3b8;
+        }
+
+        .empty-bookmarks {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
+        }
+
+        .dark-mode .empty-bookmarks {
+            color: #94a3b8;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .clear-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #ef4444, #f59e0b);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .clear-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">BlogPortfolio</span>
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html#home" class="nav-link">Início</a></li>
+                <li class="nav-item"><a href="index.html#articles" class="nav-link">Artigos</a></li>
+                <li class="nav-item"><a href="index.html#about" class="nav-link">Sobre</a></li>
+                <li class="nav-item"><a href="index.html#contact" class="nav-link">Contato</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link nav-cta">Dashboard</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+                <a href="login.html" class="btn btn-primary" id="authBtn">Login</a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="bookmarks-page">
+        <div class="bookmarks-header">
+            <h1 class="bookmarks-title">🔖 Artigos Salvos</h1>
+            <p class="bookmarks-subtitle">Seus artigos favoritos para ler depois</p>
+        </div>
+
+        <div class="articles-grid" id="bookmarksGrid" style="max-width: 1200px; margin: 0 auto;">
+            <!-- Bookmarks serão carregados aqui -->
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo">
+                        <span class="logo-icon">📝</span>
+                        <span class="logo-text">BlogPortfolio</span>
+                    </a>
+                    <p>Compartilhando conhecimento e experiências sobre tecnologia e desenvolvimento.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html#home">Início</a></li>
+                        <li><a href="index.html#articles">Artigos</a></li>
+                        <li><a href="index.html#about">Sobre</a></li>
+                        <li><a href="index.html#contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub">🐙</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BlogPortfolio. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        function loadBookmarks() {
+            const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+            const grid = document.getElementById('bookmarksGrid');
+            
+            if (bookmarks.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-bookmarks" style="grid-column: 1 / -1;">
+                        <div class="empty-icon">🔖</div>
+                        <h3>Nenhum artigo salvo ainda</h3>
+                        <p>Clique no botão "Salvar" em qualquer artigo para adicioná-lo aqui.</p>
+                        <a href="index.html#articles" class="btn btn-primary" style="margin-top: 1rem; display: inline-flex;">
+                            Explorar Artigos
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const bookmarkedArticles = articles.filter(a => bookmarks.includes(a.id.toString()));
+            
+            if (bookmarkedArticles.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-bookmarks" style="grid-column: 1 / -1;">
+                        <div class="empty-icon">🔖</div>
+                        <h3>Nenhum artigo salvo ainda</h3>
+                        <p>Clique no botão "Salvar" em qualquer artigo para adicioná-lo aqui.</p>
+                        <a href="index.html#articles" class="btn btn-primary" style="margin-top: 1rem; display: inline-flex;">
+                            Explorar Artigos
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = bookmarkedArticles.map(article => `
+                <a href="pages/article.html?id=${article.id}" class="article-card" style="text-decoration: none; color: inherit;">
+                    <div class="article-card-image" style="background: ${article.color};">
+                        <span style="font-size: 3rem;">${article.emoji}</span>
+                    </div>
+                    <div class="article-card-content">
+                        <span class="article-card-category">${article.category}</span>
+                        <h3 class="article-card-title">${article.title}</h3>
+                        <p class="article-card-excerpt">${article.excerpt}</p>
+                        <div class="article-card-meta">
+                            <span>📅 ${formatDate(article.date)}</span>
+                            <span>⏱️ ${article.readTime}</span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadBookmarks);
+    </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca | Blog Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .search-page {
+            min-height: 100vh;
+            padding: 6rem 2rem 4rem;
+        }
+
+        .search-header {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        .search-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+
+        .dark-mode .search-title {
+            color: #f1f5f9;
+        }
+
+        .search-box-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.25rem 1.5rem 1.25rem 3.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 1.125rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .search-input {
+            background: #1e293b;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
+            color: #64748b;
+        }
+
+        .search-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            background: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .filter-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            border-color: #6366f1;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .search-results {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .results-count {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+        }
+
+        .dark-mode .results-count {
+            color: #94a3b8;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
+        }
+
+        .dark-mode .no-results {
+            color: #94a3b8;
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">BlogPortfolio</span>
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html#home" class="nav-link">Início</a></li>
+                <li class="nav-item"><a href="index.html#articles" class="nav-link">Artigos</a></li>
+                <li class="nav-item"><a href="index.html#about" class="nav-link">Sobre</a></li>
+                <li class="nav-item"><a href="index.html#contact" class="nav-link">Contato</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link nav-cta">Dashboard</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+                <a href="login.html" class="btn btn-primary" id="authBtn">Login</a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="search-page">
+        <div class="search-header">
+            <h1 class="search-title">Buscar Artigos</h1>
+            <div class="search-box-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="Digite para buscar artigos..." autofocus>
+            </div>
+            
+            <div class="search-filters" id="searchFilters">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="React">React</button>
+                <button class="filter-btn" data-filter="TypeScript">TypeScript</button>
+                <button class="filter-btn" data-filter="Backend">Backend</button>
+                <button class="filter-btn" data-filter="DevOps">DevOps</button>
+                <button class="filter-btn" data-filter="Boas Práticas">Boas Práticas</button>
+            </div>
+        </div>
+
+        <div class="search-results">
+            <p class="results-count" id="resultsCount"></p>
+            <div class="articles-grid" id="searchResults"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo">
+                        <span class="logo-icon">📝</span>
+                        <span class="logo-text">BlogPortfolio</span>
+                    </a>
+                    <p>Compartilhando conhecimento e experiências sobre tecnologia e desenvolvimento.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html#home">Início</a></li>
+                        <li><a href="index.html#articles">Artigos</a></li>
+                        <li><a href="index.html#about">Sobre</a></li>
+                        <li><a href="index.html#contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub">🐙</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BlogPortfolio. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        function performSearch() {
+            const resultsContainer = document.getElementById('searchResults');
+            const countElement = document.getElementById('resultsCount');
+            
+            let filtered = articles;
+            
+            // Filtrar por categoria
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(a => a.category === currentFilter);
+            }
+            
+            // Filtrar por texto
+            if (searchQuery.trim()) {
+                const query = searchQuery.toLowerCase().trim();
+                filtered = filtered.filter(a => 
+                    a.title.toLowerCase().includes(query) ||
+                    a.excerpt.toLowerCase().includes(query) ||
+                    a.category.toLowerCase().includes(query)
+                );
+            }
+            
+            countElement.textContent = `${filtered.length} artigo${filtered.length !== 1 ? 's' : ''} encontrado${filtered.length !== 1 ? 's' : ''}`;
+            
+            if (filtered.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <h3>Nenhum artigo encontrado</h3>
+                        <p>Tente buscar com outros termos ou mude o filtro de categoria.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            resultsContainer.innerHTML = filtered.map(article => `
+                <a href="pages/article.html?id=${article.id}" class="article-card" style="text-decoration: none; color: inherit;">
+                    <div class="article-card-image" style="background: ${article.color};">
+                        <span style="font-size: 3rem;">${article.emoji}</span>
+                    </div>
+                    <div class="article-card-content">
+                        <span class="article-card-category">${article.category}</span>
+                        <h3 class="article-card-title">${highlightMatch(article.title)}</h3>
+                        <p class="article-card-excerpt">${highlightMatch(article.excerpt)}</p>
+                        <div class="article-card-meta">
+                            <span>📅 ${formatDate(article.date)}</span>
+                            <span>⏱️ ${article.readTime}</span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        function highlightMatch(text) {
+            if (!searchQuery.trim()) return text;
+            const regex = new RegExp(`(${searchQuery})`, 'gi');
+            return text.replace(regex, '<mark style="background: #fef08a; padding: 0 2px;">$1</mark>');
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                performSearch();
+            });
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    performSearch();
+                });
+            });
+            
+            // Busca inicial
+            performSearch();
+        });
+    </script>
+</body>
+</html>
