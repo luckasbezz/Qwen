@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Leia artigos sobre tecnologia, programação e desenvolvimento">
+    <meta name="keywords" content="blog, tecnologia, programação, desenvolvimento, tutoriais">
+    <meta name="author" content="Seu Nome">
+    <meta property="og:title" content="Artigo - Blog Portfolio">
+    <meta property="og:description" content="Leia artigos sobre tecnologia e programação">
+    <meta property="og:type" content="article">
+    <title>Artigo | Blog Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <style>
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 3rem 0;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+        }
+
+        .dark-mode .article-title {
+            color: #f1f5f9;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .dark-mode .article-meta {
+            color: #94a3b8;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-featured-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #334155;
+        }
+
+        .dark-mode .article-content {
+            color: #cbd5e1;
+        }
+
+        .article-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin: 2.5rem 0 1rem;
+            color: #1e293b;
+        }
+
+        .dark-mode .article-content h2 {
+            color: #f1f5f9;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid #6366f1;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 0 10px 10px 0;
+            font-style: italic;
+            color: #475569;
+        }
+
+        .dark-mode .article-content blockquote {
+            color: #94a3b8;
+        }
+
+        .article-content code {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+        }
+
+        .article-content pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .article-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .article-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            margin: 3rem 0;
+        }
+
+        .dark-mode .article-actions {
+            border-color: #334155;
+        }
+
+        .article-share {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .share-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+            background: #f1f5f9;
+        }
+
+        .dark-mode .share-btn {
+            background: #334155;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .share-btn.twitter:hover { background: #1da1f2; color: white; }
+        .share-btn.linkedin:hover { background: #0a66c2; color: white; }
+        .share-btn.facebook:hover { background: #1877f2; color: white; }
+        .share-btn.whatsapp:hover { background: #25d366; color: white; }
+
+        .bookmark-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bookmark-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .bookmark-btn.active {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+        }
+
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+
+        .comments-section {
+            margin-top: 4rem;
+        }
+
+        .comments-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+
+        .dark-mode .comments-title {
+            color: #f1f5f9;
+        }
+
+        .comment-form {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .dark-mode .comment-form {
+            background: #1e293b;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .dark-mode .comment-form textarea {
+            background: #334155;
+            border-color: #475569;
+            color: #f1f5f9;
+        }
+
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .submit-comment {
+            margin-top: 1rem;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-comment:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .comment {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .dark-mode .comment {
+            border-color: #334155;
+        }
+
+        .comment-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .dark-mode .comment-author {
+            color: #f1f5f9;
+        }
+
+        .comment-date {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+        }
+
+        .dark-mode .comment-date {
+            color: #94a3b8;
+        }
+
+        .comment-text {
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .dark-mode .comment-text {
+            color: #cbd5e1;
+        }
+
+        .reactions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .reaction-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f1f5f9;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+        }
+
+        .dark-mode .reaction-btn {
+            background: #334155;
+        }
+
+        .reaction-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .reaction-btn.active {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .reaction-count {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .dark-mode .reaction-count {
+            color: #94a3b8;
+        }
+
+        .related-articles {
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .dark-mode .related-articles {
+            border-color: #334155;
+        }
+
+        .related-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+
+        .dark-mode .related-title {
+            color: #f1f5f9;
+        }
+
+        .back-to-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 1rem;
+            }
+
+            .article-featured-image {
+                height: 250px;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .article-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-progress" id="readingProgress"></div>
+    
+    <header class="header">
+        <nav class="nav container">
+            <a href="../index.html" class="nav-logo">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">BlogPortfolio</span>
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="../index.html#home" class="nav-link">Início</a></li>
+                <li class="nav-item"><a href="../index.html#articles" class="nav-link">Artigos</a></li>
+                <li class="nav-item"><a href="../index.html#about" class="nav-link">Sobre</a></li>
+                <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contato</a></li>
+                <li class="nav-item"><a href="../bookmarks.html" class="nav-link">🔖 Salvos</a></li>
+                <li class="nav-item"><a href="../dashboard.html" class="nav-link nav-cta">Dashboard</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+                <a href="../login.html" class="btn btn-primary" id="authBtn">Login</a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="article-container">
+        <a href="../index.html" class="back-to-home">← Voltar ao início</a>
+        
+        <article>
+            <header class="article-header">
+                <span class="article-category" id="articleCategory">Tecnologia</span>
+                <h1 class="article-title" id="articleTitle">Carregando artigo...</h1>
+                <div class="article-meta">
+                    <span><span id="articleAuthor">👤</span> <span id="authorName">Autor</span></span>
+                    <span>📅 <span id="articleDate">Data</span></span>
+                    <span>⏱️ <span id="articleReadTime">Tempo</span></span>
+                </div>
+            </header>
+
+            <img src="" alt="Imagem do artigo" class="article-featured-image" id="articleImage">
+
+            <div class="article-content" id="articleContent">
+                <!-- Conteúdo será carregado dinamicamente -->
+            </div>
+
+            <div class="article-actions">
+                <div class="article-share">
+                    <span style="color: #64748b; margin-right: 0.5rem;">Compartilhar:</span>
+                    <button class="share-btn twitter" onclick="shareArticle('twitter')" aria-label="Compartilhar no Twitter">🐦</button>
+                    <button class="share-btn linkedin" onclick="shareArticle('linkedin')" aria-label="Compartilhar no LinkedIn">💼</button>
+                    <button class="share-btn facebook" onclick="shareArticle('facebook')" aria-label="Compartilhar no Facebook">📘</button>
+                    <button class="share-btn whatsapp" onclick="shareArticle('whatsapp')" aria-label="Compartilhar no WhatsApp">💬</button>
+                </div>
+                <button class="bookmark-btn" id="bookmarkBtn" onclick="toggleBookmark()">
+                    <span>🔖</span>
+                    <span>Salvar</span>
+                </button>
+            </div>
+
+            <!-- Advanced Features Toolbar -->
+            <div class="advanced-toolbar" style="display: flex; gap: 1rem; margin: 2rem 0; padding: 1.5rem; background: #f8fafc; border-radius: 15px; flex-wrap: wrap;">
+                <button id="ttsBtn" aria-label="Ler artigo em voz alta">
+                    <span>🔊</span>
+                    <span class="tts-text">Ler em voz alta</span>
+                </button>
+                <button id="focusModeBtn" aria-label="Modo foco">
+                    <span>🎯</span>
+                    <span>Modo foco</span>
+                </button>
+                <button id="autoReadBtn" aria-label="Auto-leitura">
+                    <span>📜</span>
+                    <span>Auto-leitura</span>
+                </button>
+                <select id="autoReadSpeed" style="padding: 0.5rem 1rem; border-radius: 8px; border: 2px solid #e2e8f0; background: white; font-weight: 600;">
+                    <option value="1">Velocidade: 1x</option>
+                    <option value="2">Velocidade: 2x</option>
+                    <option value="3">Velocidade: 3x</option>
+                </select>
+            </div>
+
+            <div class="reactions">
+                <button class="reaction-btn" data-reaction="like" onclick="addReaction('like')">
+                    <span>👍</span>
+                    <span class="reaction-count" id="likeCount">0</span>
+                </button>
+                <button class="reaction-btn" data-reaction="love" onclick="addReaction('love')">
+                    <span>❤️</span>
+                    <span class="reaction-count" id="loveCount">0</span>
+                </button>
+                <button class="reaction-btn" data-reaction="celebrate" onclick="addReaction('celebrate')">
+                    <span>🎉</span>
+                    <span class="reaction-count" id="celebrateCount">0</span>
+                </button>
+                <button class="reaction-btn" data-reaction="insightful" onclick="addReaction('insightful')">
+                    <span>💡</span>
+                    <span class="reaction-count" id="insightfulCount">0</span>
+                </button>
+            </div>
+
+            <section class="comments-section">
+                <h2 class="comments-title">Comentários (<span id="commentCount">0</span>)</h2>
+                
+                <div class="comment-form">
+                    <textarea id="commentText" placeholder="Escreva seu comentário aqui..."></textarea>
+                    <button class="submit-comment" onclick="submitComment()">Publicar Comentário</button>
+                </div>
+
+                <div id="commentsList">
+                    <!-- Comentários serão carregados aqui -->
+                </div>
+            </section>
+
+            <section class="related-articles">
+                <h2 class="related-title">Artigos Relacionados</h2>
+                <div class="articles-grid" id="relatedArticles">
+                    <!-- Artigos relacionados serão carregados aqui -->
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../index.html" class="nav-logo">
+                        <span class="logo-icon">📝</span>
+                        <span class="logo-text">BlogPortfolio</span>
+                    </a>
+                    <p>Compartilhando conhecimento e experiências sobre tecnologia e desenvolvimento.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="../index.html#home">Início</a></li>
+                        <li><a href="../index.html#articles">Artigos</a></li>
+                        <li><a href="../index.html#about">Sobre</a></li>
+                        <li><a href="../index.html#contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub">🐙</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BlogPortfolio. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // ===================================
+        // Article Page Functionality
+        // ===================================
+        
+        let currentArticleId = null;
+        let currentUserReactions = {};
+        let isBookmarked = false;
+
+        // Carregar artigo da URL
+        function loadArticle() {
+            const urlParams = new URLSearchParams(window.location.search);
+            currentArticleId = urlParams.get('id');
+            
+            if (!currentArticleId) {
+                window.location.href = '../index.html';
+                return;
+            }
+
+            const article = articles.find(a => a.id == currentArticleId);
+            
+            if (!article) {
+                window.location.href = '../index.html';
+                return;
+            }
+
+            // Atualizar metadados da página
+            document.title = `${article.title} | Blog Portfolio`;
+            document.querySelector('meta[name="description"]').setAttribute('content', article.excerpt);
+            
+            // Preencher dados do artigo
+            document.getElementById('articleCategory').textContent = article.category;
+            document.getElementById('articleTitle').textContent = article.title;
+            document.getElementById('articleDate').textContent = formatDate(article.date);
+            document.getElementById('articleReadTime').textContent = article.readTime;
+            document.getElementById('articleImage').src = `https://picsum.photos/seed/${article.id}/800/400`;
+            
+            // Gerar conteúdo dummy do artigo
+            generateArticleContent(article);
+            
+            // Carregar reações e comentários
+            loadReactions();
+            loadComments();
+            loadRelatedArticles(article);
+            
+            // Verificar bookmark
+            checkBookmark();
+        }
+
+        function generateArticleContent(article) {
+            const content = `
+                <p>${article.excerpt}</p>
+                
+                <h2>Introdução</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                
+                <h2>Desenvolvimento</h2>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                
+                <blockquote>
+                    "A melhor maneira de prever o futuro é criá-lo." - Peter Drucker
+                </blockquote>
+                
+                <h3>Pontos Principais</h3>
+                <ul>
+                    <li>Primeiro ponto importante sobre o assunto</li>
+                    <li>Segundo aspecto relevante a considerar</li>
+                    <li>Terceiro elemento fundamental para compreensão</li>
+                    <li>Quarto detalhe que não pode ser ignorado</li>
+                </ul>
+                
+                <h2>Exemplo de Código</h2>
+                <pre><code>// Exemplo de código relacionado ao artigo
+function exemploFuncao(parametro) {
+    console.log('Processando:', parametro);
+    return resultado;
+}</code></pre>
+                
+                <h2>Conclusão</h2>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            `;
+            
+            document.getElementById('articleContent').innerHTML = content;
+        }
+
+        // Barra de progresso de leitura
+        function updateReadingProgress() {
+            const article = document.querySelector('article');
+            const windowHeight = window.innerHeight;
+            const articleTop = article.offsetTop;
+            const articleHeight = article.offsetHeight;
+            const scrollTop = window.scrollY;
+            
+            const progress = ((scrollTop - articleTop + windowHeight) / articleHeight) * 100;
+            const clampedProgress = Math.min(Math.max(progress, 0), 100);
+            
+            document.getElementById('readingProgress').style.width = `${clampedProgress}%`;
+        }
+
+        // Compartilhar artigo
+        function shareArticle(platform) {
+            const title = document.getElementById('articleTitle').textContent;
+            const url = window.location.href;
+            
+            const urls = {
+                twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
+                linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+                whatsapp: `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`
+            };
+            
+            window.open(urls[platform], '_blank', 'width=600,height=400');
+        }
+
+        // Bookmark
+        function toggleBookmark() {
+            const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+            const btn = document.getElementById('bookmarkBtn');
+            
+            if (isBookmarked) {
+                const index = bookmarks.indexOf(currentArticleId);
+                if (index > -1) bookmarks.splice(index, 1);
+                btn.classList.remove('active');
+                btn.innerHTML = '<span>🔖</span><span>Salvar</span>';
+                isBookmarked = false;
+            } else {
+                bookmarks.push(currentArticleId);
+                btn.classList.add('active');
+                btn.innerHTML = '<span>✅</span><span>Salvo</span>';
+                isBookmarked = true;
+            }
+            
+            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+        }
+
+        function checkBookmark() {
+            const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+            isBookmarked = bookmarks.includes(currentArticleId);
+            const btn = document.getElementById('bookmarkBtn');
+            
+            if (isBookmarked) {
+                btn.classList.add('active');
+                btn.innerHTML = '<span>✅</span><span>Salvo</span>';
+            }
+        }
+
+        // Reações
+        function loadReactions() {
+            const reactions = JSON.parse(localStorage.getItem(`reactions_${currentArticleId}`) || '{"like": 0, "love": 0, "celebrate": 0, "insightful": 0}');
+            const userReactions = JSON.parse(localStorage.getItem(`user_reactions_${currentArticleId}`) || '{}');
+            
+            document.getElementById('likeCount').textContent = reactions.like;
+            document.getElementById('loveCount').textContent = reactions.love;
+            document.getElementById('celebrateCount').textContent = reactions.celebrate;
+            document.getElementById('insightfulCount').textContent = reactions.insightful;
+            
+            currentUserReactions = userReactions;
+            
+            Object.keys(userReactions).forEach(reaction => {
+                const btn = document.querySelector(`.reaction-btn[data-reaction="${reaction}"]`);
+                if (btn) btn.classList.add('active');
+            });
+        }
+
+        function addReaction(type) {
+            const reactions = JSON.parse(localStorage.getItem(`reactions_${currentArticleId}`) || '{"like": 0, "love": 0, "celebrate": 0, "insightful": 0}');
+            const userReactions = JSON.parse(localStorage.getItem(`user_reactions_${currentArticleId}`) || '{}');
+            
+            if (userReactions[type]) {
+                reactions[type]--;
+                delete userReactions[type];
+                document.querySelector(`.reaction-btn[data-reaction="${type}"]`).classList.remove('active');
+            } else {
+                if (userReactions[Object.keys(userReactions)[0]]) {
+                    const oldReaction = Object.keys(userReactions)[0];
+                    reactions[oldReaction]--;
+                    delete userReactions[oldReaction];
+                    document.querySelector(`.reaction-btn[data-reaction="${oldReaction}"]`).classList.remove('active');
+                }
+                reactions[type]++;
+                userReactions[type] = true;
+                document.querySelector(`.reaction-btn[data-reaction="${type}"]`).classList.add('active');
+            }
+            
+            localStorage.setItem(`reactions_${currentArticleId}`, JSON.stringify(reactions));
+            localStorage.setItem(`user_reactions_${currentArticleId}`, JSON.stringify(userReactions));
+            
+            document.getElementById(`${type}Count`).textContent = reactions[type];
+        }
+
+        // Comentários
+        function loadComments() {
+            const comments = JSON.parse(localStorage.getItem(`comments_${currentArticleId}`) || '[]');
+            const commentsList = document.getElementById('commentsList');
+            
+            document.getElementById('commentCount').textContent = comments.length;
+            
+            if (comments.length === 0) {
+                commentsList.innerHTML = '<p style="text-align: center; color: #64748b; padding: 2rem;">Seja o primeiro a comentar!</p>';
+                return;
+            }
+            
+            commentsList.innerHTML = comments.map(comment => `
+                <div class="comment">
+                    <div class="comment-avatar">${comment.author.charAt(0).toUpperCase()}</div>
+                    <div class="comment-content">
+                        <div class="comment-author">${comment.author}</div>
+                        <div class="comment-date">${formatDate(comment.date)}</div>
+                        <div class="comment-text">${comment.text}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function submitComment() {
+            const text = document.getElementById('commentText').value.trim();
+            
+            if (!text) {
+                alert('Por favor, escreva um comentário.');
+                return;
+            }
+            
+            const comments = JSON.parse(localStorage.getItem(`comments_${currentArticleId}`) || '[]');
+            const newComment = {
+                author: 'Visitante',
+                text: text,
+                date: new Date().toISOString()
+            };
+            
+            comments.unshift(newComment);
+            localStorage.setItem(`comments_${currentArticleId}`, JSON.stringify(comments));
+            
+            document.getElementById('commentText').value = '';
+            loadComments();
+        }
+
+        // Artigos relacionados
+        function loadRelatedArticles(currentArticle) {
+            const related = articles
+                .filter(a => a.id != currentArticleId && a.category === currentArticle.category)
+                .slice(0, 3);
+            
+            const fallback = articles.filter(a => a.id != currentArticleId).slice(0, 3 - related.length);
+            const finalRelated = [...related, ...fallback].slice(0, 3);
+            
+            const container = document.getElementById('relatedArticles');
+            container.className = 'articles-grid';
+            container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
+            
+            container.innerHTML = finalRelated.map(article => `
+                <a href="article.html?id=${article.id}" class="article-card" style="text-decoration: none; color: inherit;">
+                    <div class="article-card-image" style="background: ${article.color};">
+                        <span style="font-size: 3rem;">${article.emoji}</span>
+                    </div>
+                    <div class="article-card-content">
+                        <span class="article-card-category">${article.category}</span>
+                        <h3 class="article-card-title">${article.title}</h3>
+                        <p class="article-card-excerpt">${article.excerpt}</p>
+                        <div class="article-card-meta">
+                            <span>📅 ${formatDate(article.date)}</span>
+                            <span>⏱️ ${article.readTime}</span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            loadArticle();
+            window.addEventListener('scroll', updateReadingProgress);
+        });
+    </script>
+    
+    <!-- Advanced Features Script -->
+    <script src="../js/advanced-features.js"></script>
+</body>
+</html>
